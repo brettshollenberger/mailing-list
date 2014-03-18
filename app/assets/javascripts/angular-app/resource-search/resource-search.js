@@ -1,6 +1,6 @@
 angular
   .module('app')
-  .directive('search', ['$timeout', function($timeout) {
+  .directive('resourceSearch', function($timeout) {
     return {
       restrict: 'A',
       scope: {
@@ -17,11 +17,10 @@ angular
 
           searchTimeout = $timeout(function() {
 
-            var val = element.val();
+            var val   = element.val();
+            var query = {} ;
 
             if (val !== undefined && val.length !== undefined && val.length > 0) {
-
-              var query   = {} ;
               query.fuzzy = scope.fuzzy || false;
 
               if (scope.search && scope.search.length > 0) {
@@ -29,20 +28,20 @@ angular
               } else {
                 query.any = val;
               }
-
-              scope.model.where(query).then(function(response) {
-                _.each(response, function(item) {
-                  scope.update.nodupush(item);
-                });
-              });
-
-            } else {
-              scope.model.all().then(function(response) {
-                scope.update = response;
-              });
             }
+
+            scope.model.query(query).$promise.then(function(response) {
+              _.each(response, function(item) {
+                var responseAlreadyCached = _.find(scope.update, {id: item.id});
+                if (!responseAlreadyCached) scope.update.push(item);
+              });
+
+              _.remove(scope.update, function(item) {
+                return !_.find(response, {id: item.id});
+              });
+            });
           }, 200);
         });
       }
-    }
-  }]);
+    };
+  });

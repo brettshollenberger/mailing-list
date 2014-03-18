@@ -17,6 +17,7 @@
 //= require angular
 //= require angular-animate
 //= require angular-route
+//= require angular-resource
 //= require lodash
 //= require async
 //= require angular-bootstrap
