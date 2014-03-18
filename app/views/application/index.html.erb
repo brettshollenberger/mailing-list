@@ -1,6 +1,6 @@
 <div class="container">
   <div ng-controller="ContactsCtrl" class="row">
-
+    <h1>Contacts</h1>
     <br>
 
     Search: 
@@ -12,7 +12,7 @@
      fuzzy="true"
      ng-model="search">
 
-    <table class="table table-striped">
+    <table class="table table-striped table-bordered">
       <thead>
         <th>First Name</th>
         <th>Last Name</th>
@@ -30,14 +30,6 @@
         </tr>
       </tbody>
     </table>
-
     <br>
-    <form ng-submit="contact.$save()">
-      First Name: <input type="text" ng-model="contact.first_name" autofocus><br>
-      Last Name: <input type="text" ng-model="contact.last_name"><br>
-      Email: <input type="email" ng-model="contact.email"><br>
-
-      <button type="submit">Submit</button>
-    </form>
   </div>
 </div>
