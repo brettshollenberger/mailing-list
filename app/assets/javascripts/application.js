@@ -15,12 +15,13 @@
 //= require twitter/bootstrap
 //= require turbolinks
 //= require angular
+//= require angular-animate
+//= require angular-route
 //= require lodash
 //= require async
 //= require angular-bootstrap
 //= require angular-bootstrap/ui-bootstrap
 //= require angular-bootstrap/ui-bootstrap-tpls
-//= require angular-route
 //= require active-support
 //= require ngActiveResource
 //= require_tree .

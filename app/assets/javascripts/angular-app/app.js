@@ -1,2 +1,2 @@
 angular
-  .module('app', ['ngRoute', 'ActiveResource', 'ui.bootstrap'])
+  .module('app', ['ngRoute', 'ngAnimate', 'ActiveResource', 'ui.bootstrap'])

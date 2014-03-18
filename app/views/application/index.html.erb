@@ -3,6 +3,7 @@
 
     <br>
 
+    Search: 
     <input 
      search
      type="text" 
@@ -20,7 +21,7 @@
         <th>Last Contacted</th>
       </thead>
       <tbody>
-        <tr ng-repeat="contact in contacts | filter:search">
+        <tr ng-repeat="contact in contacts | filter:search" class="contact">
           <td>{{contact.first_name}}</td>
           <td>{{contact.last_name}}</td>
           <td>{{contact.email}}</td>
