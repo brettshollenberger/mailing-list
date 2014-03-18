@@ -2,6 +2,10 @@
   "lib": {
     "name": "bower-rails generated lib assets",
     "dependencies": {
+      "angular": "latest",
+      "angular-route": "latest",
+      "ngActiveResource": "latest",
+      "angular-bootstrap": "latest"
     }
   },
   "vendor": {

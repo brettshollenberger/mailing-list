@@ -1,0 +1,42 @@
+<div class="container">
+  <div ng-controller="ContactsCtrl" class="row">
+
+    <br>
+
+    <input 
+     search
+     type="text" 
+     model="Contact" 
+     update="contacts"
+     fuzzy="true"
+     ng-model="search">
+
+    <table class="table table-striped">
+      <thead>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Join Date</th>
+        <th>Last Contacted</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="contact in contacts | filter:search">
+          <td>{{contact.first_name}}</td>
+          <td>{{contact.last_name}}</td>
+          <td>{{contact.email}}</td>
+          <td>{{contact.join_date}}</td>
+          <td>{{contact.last_contacted}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br>
+    <form ng-submit="contact.$save()">
+      First Name: <input type="text" ng-model="contact.first_name" autofocus><br>
+      Last Name: <input type="text" ng-model="contact.last_name"><br>
+      Email: <input type="email" ng-model="contact.email"><br>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
