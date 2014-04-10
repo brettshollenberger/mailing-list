@@ -1,13 +1,7 @@
 angular
   .module('app')
-  .controller('ContactsCtrl', ['$scope', 'Contact', 'ResourceContact', function($scope, Contact, ResourceContact) {
-
-    // $scope.Contact = Contact;
-
-    // Contact.all().then(function(response) {
-    //   $scope.contacts = response;
-    // });
-
-    $scope.contacts = ResourceContact.query();
-    $scope.Contact  = ResourceContact;
+  .controller('ContactsCtrl', ['$scope', 'Contact',
+    function($scope, Contact) {
+    $scope.contacts = Contact.query();
+    $scope.Contact  = Contact;
   }]);

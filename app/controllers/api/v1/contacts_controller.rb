@@ -43,44 +43,46 @@ module Api
         [:first_name, :last_name, :email]
       end
 
+      def build_query
+        query = [""]
+        queryable_entity.each do |key, value|
+          add_sql_statement(query, key, value) if queryable?(key)
+        end
+        query
+      end
+
+      def queryable_entity
+        params[:any] ? queryable_keys : params
+      end
+
+      def add_sql_statement(query, key, value)
+        compound_sql_statement(query)
+        add_sql_condition(query, key)
+        add_sql_predicate(query, value)
+      end
+
       def queryable?(key)
         queryable_keys.include?(key.to_sym)
       end
 
-      def build_query
-        fuzzy? ? build_fuzzy_query : build_normal_query
+      def compound_sql_statement(query)
+        query[0] += (params[:any] ? " OR " : " AND ") if query[0].length > 0
+      end
+
+      def add_sql_condition(query, key)
+        query[0] += (fuzzy? ? "#{key} ILIKE ?" : "#{key} = ?")
+      end
+
+      def add_sql_predicate(query, value)
+        query.push(params[:any] ? build_search_term(params[:any]) : build_search_term(value))
+      end
+
+      def build_search_term(value)
+        fuzzy? ? "%#{value}%" : value
       end
 
       def fuzzy?
         params[:fuzzy] != nil && params[:fuzzy].to_s != "false"
-      end
-
-      def build_normal_query
-        Hash[params.map { |key, value| [key, value] if queryable?(key) }]
-      end
-
-      def add_fuzzy(query, key, value, or_statement=false)
-        if query[0].length > 0
-          query[0] += or_statement ? " OR " : " AND "
-        end
-        query[0] += "#{key} ILIKE ?"
-        query.push("%#{value}%")
-        query
-      end
-
-      def build_fuzzy_query
-        query = [""]
-
-        if params[:any]
-          queryable_keys.each { |key| query = add_fuzzy(query, key, params[:any], or_statement=true) }
-        else
-          params.each do |key, value|
-            if queryable?(key)
-              query = add_fuzzy(query, key, value)
-            end
-          end
-        end
-        query
       end
     end
   end
